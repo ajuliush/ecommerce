@@ -72,23 +72,15 @@
                 </div>
 
                 <div class="header-tools__item hover-container">
-                    @if (Route::has('login'))
+                    @if(Route::has('login'))
                     @auth
-                    @if (auth()->user()->hasRole('user'))
-                    <a href="{{ route('user.dashboard') }}" class="header-tools__item" title="{{ auth()->user()->getRoleNames()->join(', ') }}">
-                        <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <use href="#icon_user" />
-                        </svg>
-                    </a>
-                    @else
                     <a href="{{ route('dashboard') }}" class="header-tools__item" title="Go to Dashboard">
                         <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <use href="#icon_user" />
                         </svg>
                     </a>
-                    @endif
                     @else
-                    <a href="{{ route('login') }}" class="header-tools__item" title="Login">
+                    <a href="{{ route('login') }}" class="header-tools__item">
                         <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <use href="#icon_user" />
                         </svg>
@@ -96,7 +88,6 @@
                     @endauth
                     @endif
                 </div>
-
 
                 <a href="wishlist.html" class="header-tools__item">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -18,14 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('shop/', [ShopController::class, 'index'])->name('shop');
 Route::get('product/{slug}', [ShopController::class, 'show'])->name('details');
-
 Route::get('/dashboard', function () {
     return view('backend.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/user.dashboard', function () {
-    return view('frontend.dashboard');
-})->middleware(['auth', 'verified'])->name('user.dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

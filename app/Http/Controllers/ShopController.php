@@ -35,10 +35,18 @@ class ShopController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($slug)
     {
-        //
+        // Fetch the current product by slug
+        $product = Product::where('slug', $slug)->firstOrFail();
+
+        // Fetch related products excluding the current product
+        $related_products = Product::where('id', '!=', $product->id)->take(8)->get();
+
+        // Pass both the current product and related products to the view
+        return view('frontend.product_details', compact('product', 'related_products'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

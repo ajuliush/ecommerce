@@ -24,12 +24,23 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // Authenticate the user
         $request->authenticate();
 
+        // Regenerate the session to prevent session fixation attacks
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Get the authenticated user
+        $user = $request->user();
+
+        // Check the user's role using Spatie's hasRole method and redirect accordingly
+        if ($user->hasRole('user')) {
+            return redirect()->route('user.dashboard');  // Redirect to admin dashboard
+        } else {
+            return redirect()->route('dashboard');   // Redirect to user dashboard
+        }
     }
+
 
     /**
      * Destroy an authenticated session.

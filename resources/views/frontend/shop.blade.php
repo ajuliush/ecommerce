@@ -341,10 +341,12 @@
                             <div class="swiper-container background-img js-swiper-slider" data-settings='{"resizeObserver": true}'>
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                        <a href="details.html"><img loading="lazy" src="{{asset('frontend')}}/images/products/product_1.jpg" width="330" height="400" alt="{{ $item->name }}" class="pc__img"></a>
+                                        <a href="{{ route('details', $item->slug) }}"><img loading="lazy" src="{{asset('uploads/products/'.$item->image)}}" width="330" height="400" alt="{{ $item->name }}" class="pc__img"></a>
                                     </div>
                                     <div class="swiper-slide">
-                                        <a href="details.html"><img loading="lazy" src="{{asset('frontend')}}/images/products/product_1-1.jpg" width="330" height="400" alt="{{ $item->name }}" class="pc__img"></a>
+                                        @foreach (explode(',',$item->images) as $img)
+                                        <a href="{{ route('details', $item->slug) }}"><img loading="lazy" src="{{asset('uploads/products/'.$img)}}" width="330" height="400" alt="{{ $item->name }}" class="pc__img"></a>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <span class="pc__img-prev"><svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg">
@@ -358,10 +360,16 @@
                         </div>
 
                         <div class="pc__info position-relative">
-                            <p class="pc__category">Dresses</p>
-                            <h6 class="pc__title"><a href="details.html">{{ $item->name }}</a></h6>
+                            <p class="pc__category">{{ $item->category->name }}</p>
+                            <h6 class="pc__title"><a href="{{ route('details', $item->slug) }}">{{ $item->name }}</a></h6>
                             <div class="product-card__price d-flex">
-                                <span class="money price">${{ $item->regular_price }}</span>
+                                <span class="money price">
+                                    @if ($item->sale_price)
+                                    <s> ${{ $item->regular_price }}</s> {{ $item->sale_price }}
+                                    @else
+                                    ${{ $item->regular_price }}
+                                    @endif
+                                </span>
                             </div>
                             <div class="product-card__review d-flex align-items-center">
                                 <div class="reviews-group d-flex">
@@ -396,25 +404,60 @@
             </div>
 
             <nav class="shop-pages d-flex justify-content-between mt-3" aria-label="Page navigation">
-                <a href="#" class="btn-link d-inline-flex align-items-center">
+                {{-- Previous Page Link --}}
+                @if ($products->onFirstPage())
+                <span class="btn-link d-inline-flex align-items-center disabled">
+                    <svg class="me-1" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg">
+                        <use href="#icon_prev_sm" />
+                    </svg>
+                    <span class="fw-medium">PREV</span>
+                </span>
+                @else
+                <a href="{{ $products->previousPageUrl() }}" class="btn-link d-inline-flex align-items-center">
                     <svg class="me-1" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg">
                         <use href="#icon_prev_sm" />
                     </svg>
                     <span class="fw-medium">PREV</span>
                 </a>
+                @endif
+
+                {{-- Pagination Links --}}
                 <ul class="pagination mb-0">
-                    <li class="page-item"><a class="btn-link px-1 mx-2 btn-link_active" href="#">1</a></li>
-                    <li class="page-item"><a class="btn-link px-1 mx-2" href="#">2</a></li>
-                    <li class="page-item"><a class="btn-link px-1 mx-2" href="#">3</a></li>
-                    <li class="page-item"><a class="btn-link px-1 mx-2" href="#">4</a></li>
+                    @foreach ($products->onEachSide(1)->links()->elements as $element)
+                    @if (is_string($element))
+                    <li class="page-item disabled"><span class="btn-link px-1 mx-2">{{ $element }}</span></li>
+                    @endif
+
+                    @if (is_array($element))
+                    @foreach ($element as $page => $url)
+                    @if ($page == $products->currentPage())
+                    <li class="page-item"><span class="btn-link px-1 mx-2 btn-link_active">{{ $page }}</span></li>
+                    @else
+                    <li class="page-item"><a class="btn-link px-1 mx-2" href="{{ $url }}">{{ $page }}</a></li>
+                    @endif
+                    @endforeach
+                    @endif
+                    @endforeach
                 </ul>
-                <a href="#" class="btn-link d-inline-flex align-items-center">
+
+                {{-- Next Page Link --}}
+                @if ($products->hasMorePages())
+                <a href="{{ $products->nextPageUrl() }}" class="btn-link d-inline-flex align-items-center">
                     <span class="fw-medium me-1">NEXT</span>
                     <svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg">
                         <use href="#icon_next_sm" />
                     </svg>
                 </a>
+                @else
+                <span class="btn-link d-inline-flex align-items-center disabled">
+                    <span class="fw-medium me-1">NEXT</span>
+                    <svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg">
+                        <use href="#icon_next_sm" />
+                    </svg>
+                </span>
+                @endif
             </nav>
+
         </div>
     </section>
 </main>

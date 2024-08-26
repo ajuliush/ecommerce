@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
@@ -18,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('shop/', [ShopController::class, 'index'])->name('shop');
 Route::get('product/{slug}', [ShopController::class, 'show'])->name('details');
+Route::get('cart/', [CartController::class, 'index'])->name('cart.index');
+Route::post('cart/add', [CartController::class, 'add_to_cart'])->name('cart.add');
+
 Route::get('/dashboard', function () {
     return view('backend.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

@@ -356,7 +356,18 @@
                                         <use href="#icon_next_sm" />
                                     </svg></span>
                             </div>
-                            <button class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside" data-aside="cartDrawer" title="Add To Cart">Add To Cart</button>
+                            @if(Cart::instance('cart')->content()->where('id', $item->id)->count()>0)
+                            <a href="{{ route('cart.index') }}" class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium">Go to cart</a>
+                            @else
+                            <form name="addtocart-form" method="post" action="{{ route('cart.add') }}">
+                                @csrf
+                                <input type="text" name="id" value="{{ $item->id }}">
+                                <input type="text" name="quantity" value="1">
+                                <input type="text" name="name" value="{{ $item->name }}">
+                                <input type="text" name="price" value="{{ $item->sale_price == '' ? $item->regular_price : $item->sale_price  }}">
+                                <button type="submit" class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium" data-aside="cartDrawer" title="Add To Cart">Add To Cart</button>
+                            </form>
+                            @endif
                         </div>
 
                         <div class="pc__info position-relative">

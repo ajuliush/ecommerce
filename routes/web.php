@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
@@ -30,6 +31,9 @@ Route::delete('/cart/clear', [CartController::class, 'empty_cart'])->name('cart.
 
 Route::get('wishlist', [WishListController::class, 'index'])->name('wishlist.index');
 Route::post('wishlist/store', [WishListController::class, 'store'])->name('wishlist.store');
+Route::post('wishlist/remove-item/{rowId}', [WishListController::class, 'remove_item'])->name('wishlist.remove_item');
+Route::post('wishlist/destroy', [WishListController::class, 'destroy'])->name('wishlist.destroy');
+Route::post('wishlist/move-to-cart/{rowId}', [WishListController::class, 'move_to_cart'])->name('wishlist.move.to.cart');
 
 Route::get('/dashboard', function () {
     return view('backend.dashboard');
@@ -95,6 +99,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('product.edit');
     Route::post('/products/{id}/update', [ProductController::class, 'update'])->name('product.update');
     Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+
+    //Coupon  routes
+    Route::get('/coupons/', [CouponController::class, 'index'])->name('coupon.index');
+    Route::get('/coupons/create', [CouponController::class, 'create'])->name('coupon.create');
+    Route::post('/coupons/store', [CouponController::class, 'store'])->name('coupon.store');
+    Route::get('/coupons/{id}/edit', [CouponController::class, 'edit'])->name('coupon.edit');
+    Route::post('/coupons/{id}/update', [CouponController::class, 'update'])->name('coupon.update');
+    Route::delete('/coupons/{id}', [CouponController::class, 'destroy'])->name('coupon.destroy');
 });
 
 require __DIR__ . '/auth.php';

@@ -93,7 +93,7 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="coupons.html" class="">
+                <a href="{{ route('coupon.index') }}" class="{{ request()->routeIs('coupon.index') ? 'active' : '' }}">
                     <div class="icon"><i class="icon-grid"></i></div>
                     <div class="text">Coupns</div>
                 </a>

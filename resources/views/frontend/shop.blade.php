@@ -386,16 +386,20 @@
                                 <span class="reviews-note text-lowercase text-secondary ms-1">8k+ reviews</span>
                             </div>
                             @if (Cart::instance('wishlist')->content()->where('id', $item->id)->count() > 0)
-                            <button type="submit" class="pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist filled-heart" title="Add To Wishlist">
-                                <svg width="16" height="16" viewBox="0 0 20 20" fill="orange" xmlns="http://www.w3.org/2000/svg">
-                                    <use href="#icon_heart" />
-                                </svg>
-                            </button>
+                            <form action="{{ route('wishlist.remove_item', Cart::instance('wishlist')->content()->where('id', $item->id)->first()->rowId)}}" method="POST">
+                                @csrf
+                                <button type="submit" class="pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist filled-heart" title="Remove to Wishlist">
+                                    <svg width="16" height="16" viewBox="0 0 20 20" fill="orange" xmlns="http://www.w3.org/2000/svg">
+                                        <use href="#icon_heart" />
+                                    </svg>
+                                </button>
+                            </form>
                             @else
                             <form action="{{ route('wishlist.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                 <input type="hidden" name="name" value="{{ $item->name }}">
+                                <input type="hidden" name="qty" value="{{ $item->qty ?? 1}}">
                                 <input type="hidden" name="price" value="{{ $item->sale_price == '' ? $item->regular_price : $item->sale_price}}">
                                 <button type="submit" class="pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist" title="Add To Wishlist">
                                     <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

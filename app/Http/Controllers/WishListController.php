@@ -30,7 +30,7 @@ class WishListController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
-        Cart::instance('wishlist')->add($request->id, $request->name, 1, intval($request->price))->associate('App\Models\Product');
+        Cart::instance('wishlist')->add($request->id, $request->name, $request->qty ?? 1, $request->price)->associate('App\Models\Product');
         return redirect()->back();
     }
 
@@ -61,8 +61,22 @@ class WishListController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+
+    public function remove_item($rowId)
     {
-        //
+        Cart::instance('wishlist')->remove($rowId);
+        return redirect()->back();
+    }
+    public function destroy()
+    {
+        Cart::instance('wishlist')->destroy();
+        return redirect()->back();
+    }
+    public function move_to_cart(Request $request, $rowId)
+    {
+        $item = Cart::instance('wishlist')->get($rowId);
+        Cart::instance('wishlist')->remove($rowId);
+        Cart::instance('cart')->add($item->id, $item->name, $request->qty ?? 1, $item->price)->associate('App\Models\Product');
+        return redirect()->back();
     }
 }

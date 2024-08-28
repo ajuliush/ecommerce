@@ -22,21 +22,41 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    public function increase_cart_quantity($rawId)
+    public function increase_cart_quantity($rowId)
     {
-        $product = Cart::instance('cart')->get($rawId);
-        $qyt = $product->id + 1;
-        Cart::instance('cart')->update($rawId, $qyt);
+        $product = Cart::instance('cart')->get($rowId);
+        $qty = $product->qty + 1; // Corrected to use $product->qty
+        Cart::instance('cart')->update($rowId, $qty);
         return redirect()->back();
     }
 
-    public function decrease_cart_quantity($rawId)
+    public function decrease_cart_quantity($rowId)
     {
-        $product = Cart::instance('cart')->get($rawId);
-        $qyt = $product->id - 1;
-        Cart::instance('cart')->update($rawId, $qyt);
+        $product = Cart::instance('cart')->get($rowId);
+
+        // If quantity is 1, remove the item from the cart
+        if ($product->qty <= 1) {
+            Cart::instance('cart')->remove($rowId);
+        } else {
+            // Otherwise, decrease the quantity
+            $qty = $product->qty - 1;
+            Cart::instance('cart')->update($rowId, $qty);
+        }
+
         return redirect()->back();
     }
+
+    public function remove_item($rowId)
+    {
+        Cart::instance('cart')->remove($rowId);
+        return redirect()->back();
+    }
+    public function empty_cart()
+    {
+        Cart::instance('cart')->destroy();
+        return redirect()->back();
+    }
+
     /**
      * Show the form for creating a new resource.
      */

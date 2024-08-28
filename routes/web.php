@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WishListController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -19,8 +20,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('shop/', [ShopController::class, 'index'])->name('shop');
 Route::get('product/{slug}', [ShopController::class, 'show'])->name('details');
+
 Route::get('cart/', [CartController::class, 'index'])->name('cart.index');
 Route::post('cart/add', [CartController::class, 'add_to_cart'])->name('cart.add');
+Route::put('/cart/increase/{rowId}', [CartController::class, 'increase_cart_quantity'])->name('cart.increase');
+Route::put('/cart/decrease/{rowId}', [CartController::class, 'decrease_cart_quantity'])->name('cart.decrease');
+Route::delete('/cart/remove/{rowId}', [CartController::class, 'remove_item'])->name('cart.remove');
+Route::delete('/cart/clear', [CartController::class, 'empty_cart'])->name('cart.empty');
+
+Route::get('wishlist', [WishListController::class, 'index'])->name('wishlist.index');
+Route::post('wishlist/store', [WishListController::class, 'store'])->name('wishlist.store');
 
 Route::get('/dashboard', function () {
     return view('backend.dashboard');

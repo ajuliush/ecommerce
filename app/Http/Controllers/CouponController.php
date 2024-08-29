@@ -15,7 +15,7 @@ class CouponController extends Controller
         $query = Coupon::query();
 
         if ($request->has('search')) {
-            $query->where('title', 'like', '%' . $request->input('search') . '%');
+            $query->where('code', 'like', '%' . $request->input('search') . '%');
         }
 
         $coupons = $query->orderBy('expiry_date', 'DESC')->paginate(10);
@@ -35,7 +35,21 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'code' => 'required',
+            'type' => 'required',
+            'value' => 'required|numeric',
+            'cart_value' => 'required|numeric',
+            'expiry_date' => 'required|date',
+        ]);
+        $coupon = new Coupon();
+        $coupon->code = $request->code;
+        $coupon->type = $request->type;
+        $coupon->value = $request->value;
+        $coupon->cart_value = $request->cart_value;
+        $coupon->expiry_date = $request->expiry_date;
+        $coupon->save();
+        return redirect()->route('coupon.index')->with('status', 'Coupon add successfully');
     }
 
     /**
@@ -51,7 +65,8 @@ class CouponController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $coupon = Coupon::findOrFail($id);
+        return view('backend.coupon.edit', compact('coupon'));
     }
 
     /**
@@ -59,7 +74,21 @@ class CouponController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'code' => 'required',
+            'type' => 'required',
+            'value' => 'required|numeric',
+            'cart_value' => 'required|numeric',
+            'expiry_date' => 'required|date',
+        ]);
+        $coupon = Coupon::findOrFail($id);
+        $coupon->code = $request->code;
+        $coupon->type = $request->type;
+        $coupon->value = $request->value;
+        $coupon->cart_value = $request->cart_value;
+        $coupon->expiry_date = $request->expiry_date;
+        $coupon->save();
+        return redirect()->route('coupon.index')->with('status', 'Coupon update successfully');
     }
 
     /**
@@ -67,6 +96,8 @@ class CouponController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $coupon = Coupon::findOrFail($id);
+        $coupon->delete();
+        return redirect()->route('coupon.index')->with('status', 'Coupon delete successfully');
     }
 }

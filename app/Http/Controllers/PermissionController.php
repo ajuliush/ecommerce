@@ -30,7 +30,7 @@ class PermissionController extends Controller implements HasMiddleware
             $query->where('name', 'like', '%' . $request->input('search') . '%');
         }
 
-        $permissions = $query->paginate(10);
+        $permissions = $query->orderBy('id', 'DESC')->paginate(10);
         return view('backend.admin.permission.list', compact('permissions'));
     }
 
@@ -62,9 +62,7 @@ class PermissionController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
-    public function show($id)
-    {
-    }
+    public function show($id) {}
     /**
      * Edit the specified resource.
      */

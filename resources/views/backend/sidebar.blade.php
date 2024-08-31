@@ -68,17 +68,19 @@
                 </ul>
             </li>
 
-            <li class="menu-item has-children">
+            <li class="menu-item has-children  {{  request()->routeIs('order.index') ||  request()->routeIs('order.show') || request()->routeIs('order.create')|| request()->routeIs('order.edit') ? 'active' : ''}}">
                 <a href="javascript:void(0);" class="menu-item-button">
                     <div class="icon"><i class="icon-file-plus"></i></div>
                     <div class="text">Order</div>
                 </a>
                 <ul class="sub-menu">
+                    @can('view order')
                     <li class="sub-menu-item">
-                        <a href="orders.html" class="">
+                        <a href="{{ route('order.index') }}" class="{{ request()->routeIs('order.*') ? 'active' : '' }}">
                             <div class="text">Orders</div>
                         </a>
                     </li>
+                    @endcan
                     <li class="sub-menu-item">
                         <a href="order-tracking.html" class="">
                             <div class="text">Order tracking</div>

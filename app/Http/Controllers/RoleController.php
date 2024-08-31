@@ -65,7 +65,7 @@ class RoleController extends Controller implements HasMiddleware
     {
         $role = Role::findOrFail($id);
         $hasPermissions = $role->permissions->pluck('name');
-        $permissions = Permission::orderBy('name', 'ASC')->get();
+        $permissions = Permission::orderBy('id', 'ASC')->get();
         return view('backend.admin.role.edit', compact('role', 'hasPermissions', 'permissions'));
     }
     // This method will update a role in the database

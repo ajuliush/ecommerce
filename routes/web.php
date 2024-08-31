@@ -5,7 +5,9 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -42,9 +44,9 @@ Route::post('wishlist/remove-item/{rowId}', [WishListController::class, 'remove_
 Route::post('wishlist/destroy', [WishListController::class, 'destroy'])->name('wishlist.destroy');
 Route::post('wishlist/move-to-cart/{rowId}', [WishListController::class, 'move_to_cart'])->name('wishlist.move.to.cart');
 
-Route::get('/dashboard', function () {
-    return view('backend.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -114,6 +116,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/coupons/{id}/edit', [CouponController::class, 'edit'])->name('coupon.edit');
     Route::post('/coupons/{id}/update', [CouponController::class, 'update'])->name('coupon.update');
     Route::delete('/coupons/{id}', [CouponController::class, 'destroy'])->name('coupon.destroy');
+
+    //Order  routes
+    Route::get('/orders/', [OrderController::class, 'index'])->name('order.index');
+    Route::get('/orders/{id}/show', [OrderController::class, 'show'])->name('order.show');
+    Route::get('/orders/create', [OrderController::class, 'create'])->name('order.create');
+    Route::post('/orders/store', [OrderController::class, 'store'])->name('order.store');
+    Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('order.edit');
+    Route::post('/orders/{id}/update', [OrderController::class, 'update'])->name('order.update');
+    Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
 });
 
 require __DIR__ . '/auth.php';

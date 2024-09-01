@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Carbon\Carbon;
 
 class OrderController extends Controller implements HasMiddleware
 {
@@ -91,7 +92,24 @@ class OrderController extends Controller implements HasMiddleware
      */
     public function update(Request $request, string $id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $order->status = $request->order_status;
+        if ($request->order_status == 'delivered') {
+            $order->delivered_date = Carbon::now();
+        } else if ($request->order_status == 'canceled') {
+            $order->canceled_date = Carbon::now();
+        }
+        $order->save();
+
+        if ($request->order_status == 'delivered') {
+            $transaction = Transaction::where('order_id', $id)->first();
+            if ($transaction) {
+                $transaction->status = "approved";
+                $transaction->save();
+            }
+        }
+
+        return back()->with("status", "Status changed successfully!");
     }
 
     /**
@@ -100,5 +118,13 @@ class OrderController extends Controller implements HasMiddleware
     public function destroy(string $id)
     {
         //
+    }
+    public function account_cancel_order(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = "canceled";
+        $order->canceled_date = Carbon::now();
+        $order->save();
+        return back()->with("status", "Order has been cancelled successfully!");
     }
 }

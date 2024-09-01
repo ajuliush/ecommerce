@@ -67,7 +67,15 @@
                                     <td class="text-center">${{ $item->tax }}</td>
                                     <td class="text-center">${{ $item->total }}</td>
 
-                                    <td class="text-center">{{ $item->status }}</td>
+                                    <td class="text-center">
+                                        @if ($item->status == 'delivered')
+                                        <span class="badge bg-success">Delivered</span>
+                                        @elseif($item->status == 'canceled')
+                                        <span class="badge bg-danger">Canceled</span>
+                                        @else
+                                        <span class="badge bg-warning">Ordered</span>
+                                        @endif
+                                    </td>
                                     <td class="text-center">{{ $item->created_at }}</td>
                                     <td class="text-center">{{ $item->orderItems->count() }}</td>
                                     <td></td>

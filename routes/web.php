@@ -125,6 +125,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('order.edit');
     Route::post('/orders/{id}/update', [OrderController::class, 'update'])->name('order.update');
     Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
+    Route::post('/cancel-order/{id}', [OrderController::class, 'account_cancel_order'])->name('account_cancel_order');
 });
 
 require __DIR__ . '/auth.php';

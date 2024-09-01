@@ -308,6 +308,7 @@
     <div id="scrollTop" class="visually-hidden end-0"></div>
     <div class="page-overlay"></div>
 
+    <script src="{{ asset('backend') }}/js/sweetalert.min.js"></script>
     <script src="{{ asset('frontend') }}/js/plugins/jquery.min.js"></script>
     <script src="{{ asset('frontend') }}/js/plugins/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('frontend') }}/js/plugins/bootstrap-slider.min.js"></script>

@@ -34,6 +34,9 @@
                     </div>
                     <a class="tf-button style-1 w208" href="{{route('order.index')}}">Back</a>
                 </div>
+                @if(Session::has('status'))
+                <p class="alert alert-success">{{Session::get('status')}}</p>
+                @endif
                 <table class="table table-striped table-bordered table-transaction">
                     <tr>
                         <th>Order No</th>
@@ -73,6 +76,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
+
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
@@ -171,6 +175,27 @@
                         </td>
                     </tr>
                 </table>
+            </div>
+
+            <div class="wg-box mt-5">
+                <h5>Update Order Status</h5>
+                <form action="{{route('order.update', $order->id)}}" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="select">
+                                <select id="order_status" name="order_status">
+                                    <option value="ordered" {{$order->status=="ordered" ? "selected":""}}>Ordered</option>
+                                    <option value="delivered" {{$order->status=="delivered" ? "selected":""}}>Delivered</option>
+                                    <option value="canceled" {{$order->status=="canceled" ? "selected":""}}>Canceled</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary tf-button w208">Update</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

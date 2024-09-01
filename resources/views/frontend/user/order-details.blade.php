@@ -65,9 +65,6 @@
             </div>
 
             <div class="col-lg-10">
-                @if(Session::has('status'))
-                <p class="alert alert-success">{{Session::get('status')}}</p>
-                @endif
                 <div class="wg-box mt-5 mb-5">
                     <div class="row">
                         <div class="col-6">
@@ -78,6 +75,9 @@
                         </div>
                     </div>
                     <div class="table-responsive">
+                        @if(Session::has('status'))
+                        <p class="alert alert-success">{{Session::get('status')}}</p>
+                        @endif
                         <table class="table table-striped table-bordered table-transaction">
                             <tr>
                                 <th>Order No</th>
@@ -99,11 +99,11 @@
                                 <th>Order Status</th>
                                 <td colspan="5">
                                     @if($order->status=='delivered')
-                                    <span class="badge bg-success">Delivered</span>
+                                    <span class="badge bg-success" style="background-color: #64e70c !important;">Delivered</span>
                                     @elseif($order->status=='canceled')
-                                    <span class="badge bg-danger">Canceled</span>
+                                    <span class="badge bg-danger" style="background-color: #e70c0c !important;">Canceled</span>
                                     @else
-                                    <span class="badge bg-warning">Ordered</span>
+                                    <span class="badge bg-warning" style="background-color: #e7cc0c !important;">Ordered</span>
                                     @endif
                                 </td>
                             </tr>
@@ -123,7 +123,7 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
+                                    <th class="text-center">Name</th>
                                     <th class="text-center">Price</th>
                                     <th class="text-center">Quantity</th>
                                     <th class="text-center">SKU</th>
@@ -138,7 +138,7 @@
                                 @foreach ($order->orderItems as $orderitem)
                                 <tr>
 
-                                    <td class="pname">
+                                    <td class="text-center">
                                         <div class="image">
                                             <img src="{{asset('uploads/products/thumbnails')}}/{{$orderitem->product->image}}" alt="" class="image">
                                         </div>
@@ -215,7 +215,7 @@
                                     @elseif(optional($order->transaction)->status == 'refunded')
                                     <span class="badge bg-secondary">Refunded</span>
                                     @else
-                                    <span class="badge bg-warning">Pending</span>
+                                    <span class="badge bg-warning" style="background-color: #e7cc0c !important;">Pending</span>
                                     @endif
 
                                 </td>
@@ -223,9 +223,39 @@
                         </table>
                     </div>
                 </div>
+                @if($order->status=='ordered')
+                <div class="wg-box mt-5 text-right">
+                    <form action="{{route('account_cancel_order', $order->id)}}" method="POST">
+                        @csrf
+                        <button type="button" class="btn btn-danger cancel">Cancel Order</button>
+                    </form>
+                </div>
+                @endif
             </div>
 
         </div>
     </section>
 </main>
 @endsection
+@push('scripts')
+<script>
+    $(function() {
+        $('.cancel').on('click', function(e) {
+            e.preventDefault();
+            var form = $(this).closest('form');
+            swal({
+                title: "Are you sure?"
+                , text: "You want to cancel this order?"
+                , type: "warning"
+                , buttons: ["No", "Yes"]
+                , confirmButtonColor: '#dc3545'
+            }).then(function(result) {
+                if (result) {
+                    form.submit();
+                }
+            });
+        });
+    });
+
+</script>
+@endpush

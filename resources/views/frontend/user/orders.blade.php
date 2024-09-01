@@ -46,7 +46,7 @@
                                     <th class="text-center">Order Date</th>
                                     <th class="text-center">Items</th>
                                     <th class="text-center">Delivered On</th>
-                                    <th></th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,11 +60,11 @@
                                     <td class="text-center">${{$order->total}}</td>
                                     <td class="text-center">
                                         @if($order->status=='delivered')
-                                        <span class="badge bg-success">Delivered</span>
+                                        <span class="badge bg-success" style="background-color: #44ed09 !important;">Delivered</span>
                                         @elseif($order->status=='canceled')
-                                        <span class="badge bg-danger">Canceled</span>
+                                        <span class="badge bg-danger" style="background-color: #f40a0a !important;">Canceled</span>
                                         @else
-                                        <span class="badge bg-warning">Ordered</span>
+                                        <span class="badge bg-warning" style="background-color: #d9f40a !important;">Ordered</span>
                                         @endif
                                     </td>
                                     <td class="text-center">{{$order->created_at}}</td>

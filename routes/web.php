@@ -13,6 +13,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishListController;
 use Illuminate\Support\Facades\Route;
@@ -126,6 +127,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/orders/{id}/update', [OrderController::class, 'update'])->name('order.update');
     Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
     Route::post('/cancel-order/{id}', [OrderController::class, 'account_cancel_order'])->name('account_cancel_order');
+
+    //Slider  routes
+    Route::get('/sliders/', [SliderController::class, 'index'])->name('slider.index');
+    Route::get('/sliders/{id}/show', [SliderController::class, 'show'])->name('slider.show');
+    Route::get('/sliders/create', [SliderController::class, 'create'])->name('slider.create');
+    Route::post('/sliders/store', [SliderController::class, 'store'])->name('slider.store');
+    Route::get('/sliders/{id}/edit', [SliderController::class, 'edit'])->name('slider.edit');
+    Route::post('/sliders/{id}/update', [SliderController::class, 'update'])->name('slider.update');
+    Route::delete('/sliders/{id}', [SliderController::class, 'destroy'])->name('slider.destroy');
 });
 
 require __DIR__ . '/auth.php';

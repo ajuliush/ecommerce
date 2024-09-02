@@ -89,7 +89,7 @@
                 </ul>
             </li>
             <li class="menu-item">
-                <a href="slider.html" class="">
+                <a href="{{ route('slider.index') }}" class="{{ request()->routeIs('slider.index') || request()->routeIs('slider.create') || request()->routeIs('slider.edit') ? 'active' : '' }}">
                     <div class="icon"><i class="icon-image"></i></div>
                     <div class="text">Slider</div>
                 </a>

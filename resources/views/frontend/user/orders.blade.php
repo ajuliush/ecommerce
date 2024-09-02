@@ -50,6 +50,9 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if ($orders->isNotEmpty())
+
+
                                 @foreach ($orders as $order)
                                 <tr>
                                     <td class="text-center">{{"1" . str_pad($order->id,4,"0",STR_PAD_LEFT)}}</td>
@@ -83,6 +86,13 @@
                                     </td>
                                 </tr>
                                 @endforeach
+                                @else
+                                <tr>
+                                    <td colspan="11" class="text-center">
+                                        {{ "No Data available" }}
+                                    </td>
+                                </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>

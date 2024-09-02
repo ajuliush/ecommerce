@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating my-3">
-                                        <input type="text" class="form-control" placeholder="Mobile Number" name="mobile" value="{{ old('mobile', $user->address->phone) }}" required="">
+                                        <input type="text" class="form-control" placeholder="Mobile Number" name="mobile" value="{{ old('mobile', $user->address->phone ?? '') }}" required="">
                                         <label for="mobile">Mobile Number</label>
                                     </div>
                                 </div>

@@ -58,13 +58,66 @@
                                 @foreach ($coupons as $coupon)
                                 <tr>
                                     <td>
-                                        {{ $loop->iteration }}
+
+                                        @if ($coupon->expiry_date <= Today()) <span style="color: red; font-weight: bold;">
+                                            {{ $loop->iteration }}
+                                            </span>
+                                            @else
+                                            <span style="color: green;">
+                                                {{ $loop->iteration }}
+                                            </span>
+                                            @endif
                                     </td>
-                                    <td>{{ $coupon->code }}</td>
-                                    <td>{{ $coupon->type }}</td>
-                                    <td> {{ $coupon->value }} </td>
-                                    <td> ${{ $coupon->cart_value }} </td>
-                                    <td>{{ $coupon->expiry_date }}</td>
+                                    <td>
+                                        @if ($coupon->expiry_date <= Today()) <span style="color: red; font-weight: bold;">
+                                            {{ $coupon->code }}
+                                            </span>
+                                            @else
+                                            <span style="color: green;">
+                                                {{ $coupon->code }}
+                                            </span>
+                                            @endif
+                                    </td>
+                                    <td>
+                                        @if ($coupon->expiry_date <= Today()) <span style="color: red; font-weight: bold;">
+                                            {{ $coupon->type }}
+                                            </span>
+                                            @else
+                                            <span style="color: green;">
+                                                {{ $coupon->type }}
+                                            </span>
+                                            @endif
+                                    </td>
+                                    <td>
+                                        @if ($coupon->expiry_date <= Today()) <span style="color: red; font-weight: bold;">
+                                            {{ $coupon->value }}
+                                            </span>
+                                            @else
+                                            <span style="color: green;">
+                                                {{ $coupon->value }}
+                                            </span>
+                                            @endif
+                                    </td>
+                                    <td>
+                                        @if ($coupon->expiry_date <= Today()) <span style="color: red; font-weight: bold;">
+                                            ${{ $coupon->cart_value }}
+                                            </span>
+                                            @else
+                                            <span style="color: green;">
+                                                ${{ $coupon->cart_value }}
+                                            </span>
+                                            @endif
+                                    </td>
+                                    <td>
+                                        @if ($coupon->expiry_date <= Today()) <span style="color: red; font-weight: bold;">
+                                            {{ $coupon->expiry_date . ' Expired!!!' }}
+                                            </span>
+                                            @else
+                                            <span style="color: green;">
+                                                {{ $coupon->expiry_date }}
+                                            </span>
+                                            @endif
+                                    </td>
                                     <td>
                                         <div class="list-icon-function">
                                             <a href="{{ route('coupon.edit', $coupon->id) }}">

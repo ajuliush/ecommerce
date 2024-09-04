@@ -62,7 +62,7 @@
                                     <td>{{ $category->name }}</td>
                                     <td>{{ $category->slug }}</td>
                                     <td> <img src="{{ asset('uploads/categories/'.$category->image) }}" alt=""> </td>
-                                    <td>0</td>
+                                    <td>{{ $category->products->count() }}</td>
                                     <td>
                                         <div class="list-icon-function">
                                             <a href="{{ route('category.edit', $category->id) }}">

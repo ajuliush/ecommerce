@@ -87,7 +87,7 @@
                         <div class="swiper-slide">
                             <img loading="lazy" class="w-100 h-auto mb-3" src="{{ asset('uploads/categories/'.$item->image) }}" width="124" height="124" alt="" />
                             <div class="text-center">
-                                <a href="{{ route('home'), $item->id}}" class="menu-link fw-medium">{{ $item->name }}</a>
+                                <a href="{{ route('shop', ['categories' => $item->id])}}" class="menu-link fw-medium">{{ $item->name }}</a>
                             </div>
                         </div>
                         @endforeach

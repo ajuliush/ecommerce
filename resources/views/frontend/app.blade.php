@@ -193,7 +193,7 @@
             </a>
 
             <div class="logo">
-                <a href="index.html">
+                <a href="{{ route('home') }}">
                     <img src="{{ asset('frontend') }}/images/logo.png" alt="Uomo" class="logo__image d-block" />
                 </a>
             </div>
@@ -229,10 +229,10 @@
                 <div class="overflow-hidden">
                     <ul class="navigation__list list-unstyled position-relative">
                         <li class="navigation__item">
-                            <a href="index.html" class="navigation__link">Home</a>
+                            <a href="{{ route('home') }}" class="navigation__link">Home</a>
                         </li>
                         <li class="navigation__item">
-                            <a href="shop.html" class="navigation__link">Shop</a>
+                            <a href="{{ route('shop') }}" class="navigation__link">Shop</a>
                         </li>
                         <li class="navigation__item">
                             <a href="{{ route('cart.index') }}" class="navigation__link">Cart</a>
@@ -241,7 +241,7 @@
                             <a href="about.html" class="navigation__link">About</a>
                         </li>
                         <li class="navigation__item">
-                            <a href="contact.html" class="navigation__link">Contact</a>
+                            <a href="{{ route('contact-us') }}" class="navigation__link">Contact</a>
                         </li>
                     </ul>
                 </div>

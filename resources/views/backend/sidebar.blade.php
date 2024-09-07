@@ -100,7 +100,12 @@
                     <div class="text">Coupns</div>
                 </a>
             </li>
-
+            <li class="menu-item">
+                <a href="{{ route('contact.index') }}" class="{{ request()->routeIs('contact.index') || request()->routeIs('contact.create') || request()->routeIs('contact.edit') ? 'active' : '' }}">
+                    <div class="icon"><i class="icon-mail"></i></div>
+                    <div class="text">Coupns</div>
+                </a>
+            </li>
             <li class="menu-item">
                 <a href="users.html" class="">
                     <div class="icon"><i class="icon-user"></i></div>

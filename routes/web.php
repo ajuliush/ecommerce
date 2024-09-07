@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -44,6 +45,9 @@ Route::post('wishlist/store', [WishListController::class, 'store'])->name('wishl
 Route::post('wishlist/remove-item/{rowId}', [WishListController::class, 'remove_item'])->name('wishlist.remove_item');
 Route::post('wishlist/destroy', [WishListController::class, 'destroy'])->name('wishlist.destroy');
 Route::post('wishlist/move-to-cart/{rowId}', [WishListController::class, 'move_to_cart'])->name('wishlist.move.to.cart');
+
+Route::get('contact-us/', [HomeController::class, 'contact_us'])->name('contact-us');
+Route::post('contact-us-store/', [HomeController::class, 'contact_us_store'])->name('contact-us-store');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -136,6 +140,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/sliders/{id}/edit', [SliderController::class, 'edit'])->name('slider.edit');
     Route::post('/sliders/{id}/update', [SliderController::class, 'update'])->name('slider.update');
     Route::delete('/sliders/{id}', [SliderController::class, 'destroy'])->name('slider.destroy');
+
+    //Coupon  routes
+    Route::get('/contact/', [ContactController::class, 'index'])->name('contact.index');
+    Route::get('/contact/create', [ContactController::class, 'create'])->name('contact.create');
+    Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
+    Route::get('/contact/{id}/edit', [ContactController::class, 'edit'])->name('contact.edit');
+    Route::post('/contact/{id}/update', [ContactController::class, 'update'])->name('contact.update');
+    Route::delete('/contact/{id}', [ContactController::class, 'destroy'])->name('contact.destroy');
 });
 
 require __DIR__ . '/auth.php';

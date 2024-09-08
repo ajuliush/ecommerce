@@ -42,4 +42,10 @@ class HomeController extends Controller
         $contact->save();
         return redirect()->back()->with('status', 'Your message has been sent successfully.');
     }
+    public function search(Request $request)
+    {
+       $search = $request->input('query');
+       $products = Product::where('name', 'like', "%{$search}%")->get()->take(8);
+        return response()->json($products);
+    }
 }

@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('shop/', [ShopController::class, 'index'])->name('shop');
 Route::get('product/{slug}', [ShopController::class, 'show'])->name('details');
+Route::get('search', [HomeController::class, 'search'])->name('search');
 
 Route::get('cart/', [CartController::class, 'index'])->name('cart.index');
 Route::post('cart/add', [CartController::class, 'add_to_cart'])->name('cart.add');

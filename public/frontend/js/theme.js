@@ -10,7 +10,7 @@ let UomoSelectors = {
   quantityControl: '.qty-control',
   scrollToTopId: 'scrollTop',
   $pageBackDrop: document.querySelector('.page-overlay'),
-  scrollWidth:   window.innerWidth - document.body.clientWidth + 'px',
+  scrollWidth: window.innerWidth - document.body.clientWidth + 'px',
   jsContentVisible: '.js-content_visible',
   starRatingControl: '.star-rating .star-rating__star-icon',
 }
@@ -23,7 +23,7 @@ let UomoHelpers = {
   debounce: (callback, wait, immediate = false) => {
     let timeout = null;
 
-    return function() {
+    return function () {
       const callNow = immediate && !timeout;
       const next = () => callback.apply(this, arguments);
 
@@ -55,7 +55,7 @@ let UomoHelpers = {
   },
 
   hideHoverComponents: () => {
-    document.querySelectorAll(UomoSelectors.jsContentVisible).forEach( el => {
+    document.querySelectorAll(UomoSelectors.jsContentVisible).forEach(el => {
       el.classList.remove(UomoSelectors.jsContentVisible.substring(1));
     });
   },
@@ -94,7 +94,7 @@ function pureFadeOut(e) {
 
   // Components appear after click
   UomoElements.JsHoverContent = (function () {
-    function JsHoverContent () {
+    function JsHoverContent() {
       const visibleClass = UomoSelectors.jsContentVisible.substring(1);
 
       document.querySelectorAll('.js-hover__open').forEach(el => {
@@ -124,8 +124,8 @@ function pureFadeOut(e) {
   })();
 
   UomoElements.QtyControl = (function () {
-    function QtyControl () {
-      document.querySelectorAll(UomoSelectors.quantityControl).forEach(function($qty) {
+    function QtyControl() {
+      document.querySelectorAll(UomoSelectors.quantityControl).forEach(function ($qty) {
         if ($qty.classList.contains('qty-initialized')) {
           return;
         }
@@ -135,11 +135,11 @@ function pureFadeOut(e) {
         const $increase = $qty.querySelector('.qty-control__increase');
         const $number = $qty.querySelector('.qty-control__number');
 
-        $reduce.addEventListener('click', function() {
+        $reduce.addEventListener('click', function () {
           $number.value = parseInt($number.value) > 1 ? parseInt($number.value) - 1 : parseInt($number.value);
         });
 
-        $increase.addEventListener('click', function() {
+        $increase.addEventListener('click', function () {
           $number.value = parseInt($number.value) + 1;
         });
       });
@@ -149,27 +149,27 @@ function pureFadeOut(e) {
   })();
 
   UomoElements.ScrollToTop = (function () {
-    function ScrollToTop () {
+    function ScrollToTop() {
       const $scrollTop = document.getElementById(UomoSelectors.scrollToTopId);
 
       if (!$scrollTop) {
         return;
       }
 
-      $scrollTop.addEventListener('click', function(event) {
+      $scrollTop.addEventListener('click', function (event) {
         event.preventDefault();
         event.stopPropagation();
         window.scrollTo(window.scrollX, 0);
       });
 
       let scrolled = false;
-      window.addEventListener('scroll', function() {
-        if ( 250 < window.scrollY && !scrolled ) {
+      window.addEventListener('scroll', function () {
+        if (250 < window.scrollY && !scrolled) {
           $scrollTop.classList.remove('visually-hidden');
           scrolled = true;
         }
 
-        if ( 250 > window.scrollY && scrolled ) {
+        if (250 > window.scrollY && scrolled) {
           $scrollTop.classList.add('visually-hidden');
           scrolled = false;
         }
@@ -179,7 +179,7 @@ function pureFadeOut(e) {
     return ScrollToTop;
   })();
 
-  UomoElements.Search = (function() {
+  UomoElements.Search = (function () {
     function Search() {
       // Declare variables
       this.selectors = {
@@ -209,7 +209,7 @@ function pureFadeOut(e) {
     Search.prototype = Object.assign({}, Search.prototype, {
       _initSearchSelect: function () {
         const _this = this;
-        this.$containers.forEach( el => {
+        this.$containers.forEach(el => {
           /**
            * Filter suggestion list on input
            */
@@ -217,7 +217,7 @@ function pureFadeOut(e) {
           const $inputBox = el.querySelector(_this.selectors.inputBox);
           $inputBox && $inputBox.addEventListener('keyup', (e) => {
             const filterValue = e.currentTarget.value.toUpperCase();
-            el.querySelectorAll(_this.selectors.searchSuggestItem).forEach( el => {
+            el.querySelectorAll(_this.selectors.searchSuggestItem).forEach(el => {
               const txtValue = el.innerText;
 
               if (txtValue.toUpperCase().indexOf(filterValue) > -1) {
@@ -231,8 +231,8 @@ function pureFadeOut(e) {
           /**
            * Search category selector
            */
-          el.querySelectorAll(_this.selectors.searchCategorySelector).forEach( scs => {
-            scs.addEventListener('click', function(e) {
+          el.querySelectorAll(_this.selectors.searchCategorySelector).forEach(scs => {
+            scs.addEventListener('click', function (e) {
               e.preventDefault();
               const $s_f_a = el.querySelector(_this.selectors.searchFieldActor);
               if ($s_f_a) {
@@ -250,8 +250,8 @@ function pureFadeOut(e) {
 
       _initSearchReset: function () {
         const _this = this;
-        document.querySelectorAll(this.selectors.resetButton).forEach( el => {
-          el.addEventListener('click', function(e) {
+        document.querySelectorAll(this.selectors.resetButton).forEach(el => {
+          el.addEventListener('click', function (e) {
             const $parentDiv = e.target.closest(_this.selectors.container);
             const $inputBox = $parentDiv.querySelector(_this.selectors.inputBox);
             const $rc = $parentDiv.querySelector(_this.selectors.resultContainer);
@@ -266,8 +266,8 @@ function pureFadeOut(e) {
       _initSearchInputFocus: function () {
         const _this = this;
 
-        document.querySelectorAll(this.selectors.inputBox).forEach( el => {
-          el.addEventListener('blur', function(e) {
+        document.querySelectorAll(this.selectors.inputBox).forEach(el => {
+          el.addEventListener('blur', function (e) {
             if (e.target.value.length == 0) {
               _this._removeFormActiveClass(e.target);
             }
@@ -277,7 +277,7 @@ function pureFadeOut(e) {
 
       _initAjaxSearch: function () {
         const _this = this;
-        document.querySelectorAll(this.selectors.inputBox).forEach( el => {
+        document.querySelectorAll(this.selectors.inputBox).forEach(el => {
           el.addEventListener('keyup', (event) => {
             if (event.target.value.length == 0) {
               _this._removeFormActiveClass(event.target);
@@ -299,14 +299,14 @@ function pureFadeOut(e) {
           } else {
             return Promise.reject(response);
           }
-        }).then(function(data) {
+        }).then(function (data) {
           _this._updateSearchResult(data, $form);
         }).catch(function (err) {
           _this._handleAjaxSearchError(err.message, $form);
         });
       }, 180),
 
-      _updateSearchResult: function(data, $form) {
+      _updateSearchResult: function (data, $form) {
         const $ajaxDom = new DOMParser().parseFromString(data, 'text/html');
         // Get filtered result dom
         const $f_r = $ajaxDom.querySelector('.search-result');
@@ -325,11 +325,11 @@ function pureFadeOut(e) {
 
   // Aside Popup
   UomoElements.Aside = (function () {
-    function Aside () {
+    function Aside() {
       this.selectors = {
-        activator:    '.js-open-aside',
-        closeBtn:     '.js-close-aside',
-        activeClass:  'aside_visible'
+        activator: '.js-open-aside',
+        closeBtn: '.js-close-aside',
+        activeClass: 'aside_visible'
       }
 
       this.$asideActivators = document.querySelectorAll(this.selectors.activator);
@@ -343,7 +343,7 @@ function pureFadeOut(e) {
     Aside.prototype = Object.assign({}, Aside.prototype, {
       _init: function () {
         const _this = this;
-        this.$asideActivators.forEach(function($activator) {
+        this.$asideActivators.forEach(function ($activator) {
           $activator.addEventListener('click', (event) => {
             event.preventDefault();
             const targetElId = event.currentTarget.dataset.aside;
@@ -357,7 +357,7 @@ function pureFadeOut(e) {
 
       _initCloseActions: function () {
         const _this = this;
-        this.$closeBtns.forEach( el => {
+        this.$closeBtns.forEach(el => {
           el.addEventListener('click', (event) => {
             event.preventDefault();
             _this._closeAside();
@@ -375,7 +375,7 @@ function pureFadeOut(e) {
 
       _closeAside: function () {
         UomoHelpers.hidePageBackdrop();
-        document.querySelectorAll('.' + this.selectors.activeClass).forEach( el => {
+        document.querySelectorAll('.' + this.selectors.activeClass).forEach(el => {
           el.classList.remove(this.selectors.activeClass);
         });
       }
@@ -385,7 +385,7 @@ function pureFadeOut(e) {
   })();
 
   UomoElements.Countdown = (function () {
-    function Countdown (container) {
+    function Countdown(container) {
       this.selectors = {
         element: '.js-countdown'
       }
@@ -399,7 +399,7 @@ function pureFadeOut(e) {
       _init: function () {
         const _this = this;
         const $countdowns = this.$container.querySelectorAll(this.selectors.element);
-        $countdowns.forEach(function($el) {
+        $countdowns.forEach(function ($el) {
           _this._initElement($el);
         });
       },
@@ -417,7 +417,7 @@ function pureFadeOut(e) {
   })();
 
   UomoElements.ShopViewChange = (function () {
-    function ShopViewChange () {
+    function ShopViewChange() {
       this.selectors = {
         element: '.js-cols-size',
         activeClass: 'btn-link_active'
@@ -431,8 +431,8 @@ function pureFadeOut(e) {
     ShopViewChange.prototype = Object.assign({}, ShopViewChange.prototype, {
       _init: function () {
         const _this = this;
-        this.$buttons.forEach(function($btn) {
-          $btn.addEventListener('click', function(event) {
+        this.$buttons.forEach(function ($btn) {
+          $btn.addEventListener('click', function (event) {
             event.preventDefault();
             const targetDomId = $btn.dataset.target;
             _this._resetActiveLinks();
@@ -465,7 +465,7 @@ function pureFadeOut(e) {
   })();
 
   UomoElements.Filters = (function () {
-    function Filters () {
+    function Filters() {
       this.selectors = {
         element: '.js-filter',
         activeClass: 'swatch_active',
@@ -479,8 +479,8 @@ function pureFadeOut(e) {
     Filters.prototype = Object.assign({}, Filters.prototype, {
       _init: function () {
         const _this = this;
-        this.$buttons.forEach(function($btn) {
-          $btn.addEventListener('click', function(event) {
+        this.$buttons.forEach(function ($btn) {
+          $btn.addEventListener('click', function (event) {
             event.preventDefault();
             _this._toggleActive($btn);
           });
@@ -501,7 +501,7 @@ function pureFadeOut(e) {
   })();
 
   UomoElements.StickyElement = (function () {
-    function StickyElement () {
+    function StickyElement() {
       this.selectors = {
         element: '.side-sticky'
       }
@@ -517,7 +517,7 @@ function pureFadeOut(e) {
           return;
         }
 
-        this.$stickies.forEach(function($sticky) {
+        this.$stickies.forEach(function ($sticky) {
           const $grid = $sticky.previousElementSibling || $sticky.nextElementSibling;
           const $target = $grid.offsetHeight > $sticky.offsetHeight ? $sticky : $grid;
 
@@ -538,13 +538,13 @@ function pureFadeOut(e) {
       _updateStatus() {
         const _this = this;
 
-        _this.$stickies.forEach(function($sticky) {
+        _this.$stickies.forEach(function ($sticky) {
           const $grid = $sticky.previousElementSibling || $sticky.nextElementSibling;
           const $target = $grid.offsetHeight > $sticky.offsetHeight ? $sticky : $grid;
 
           var bounds = $target.getBoundingClientRect(),
-              maxTop = bounds.top + window.scrollY - $target.offsetTop + UomoHelpers.sideStkEl.initialTopOffset,
-              minTop = $target.clientHeight - window.innerHeight + 30;
+            maxTop = bounds.top + window.scrollY - $target.offsetTop + UomoHelpers.sideStkEl.initialTopOffset,
+            minTop = $target.clientHeight - window.innerHeight + 30;
 
           if (window.scrollY < $target.lastKnownY) {
             UomoHelpers.sideStkEl.currentTop -= window.scrollY - $target.lastKnownY;
@@ -567,7 +567,7 @@ function pureFadeOut(e) {
 
   // Header Section
   UomoSections.Header = (function () {
-    function Header () {
+    function Header() {
       this.selectors = {
         header: '.header',
         mobileHeader: '.header-mobile',
@@ -611,14 +611,14 @@ function pureFadeOut(e) {
         this._initStickyHeader();
       },
 
-      _initMobileMenu: function() {
+      _initMobileMenu: function () {
         const _this = this;
         const $mobileMenuActivator = this.$header.querySelector(this.selectors.mobileMenuActivator);
         const $mobileDropdown = this.$header.querySelector(this.selectors.mobileMenu);
         let transformLeft = 0;
 
         if ($mobileDropdown) {
-          $mobileMenuActivator && $mobileMenuActivator.addEventListener('click', function(event) {
+          $mobileMenuActivator && $mobileMenuActivator.addEventListener('click', function (event) {
             event.preventDefault();
             if (document.body.classList.contains(_this.selectors.mobileMenuActiveClass)) {
               document.body.classList.remove(_this.selectors.mobileMenuActiveClass);
@@ -634,7 +634,7 @@ function pureFadeOut(e) {
           const $mobileMenu = $mobileDropdown.querySelector('.navigation__list');
           let menuMaxHeight = $mobileMenu.offsetHeight;
           $mobileMenu && $mobileMenu.querySelectorAll(_this.selectors.mobileSubNavOpen).forEach($btn => {
-            $btn.addEventListener('click', function(event) {
+            $btn.addEventListener('click', function (event) {
               event.preventDefault;
               $btn.nextElementSibling.classList.remove(_this.selectors.mobileSubNavHiddenClass);
 
@@ -651,7 +651,7 @@ function pureFadeOut(e) {
 
 
           $mobileMenu && $mobileMenu.querySelectorAll(_this.selectors.mobileSubNavClose).forEach($btn => {
-            $btn.addEventListener('click', function(event) {
+            $btn.addEventListener('click', function (event) {
               event.preventDefault;
               transformLeft += 100;
               $mobileMenu.style.transform = 'translateX(' + transformLeft.toString() + '%)';
@@ -673,10 +673,10 @@ function pureFadeOut(e) {
 
         const _this = this;
         let headerHeight = this.$header.offsetHeight;
-        if(this.$header.classList.contains("header-transparent-bg")) {
+        if (this.$header.classList.contains("header-transparent-bg")) {
           headerHeight = 0;
 
-          if(document.querySelectorAll(".header-transparent-bg .header-top").length > 0) {
+          if (document.querySelectorAll(".header-transparent-bg .header-top").length > 0) {
             headerHeight = document.querySelector(".header-transparent-bg .header-top").offsetHeight;
           }
         }
@@ -688,18 +688,18 @@ function pureFadeOut(e) {
         document.addEventListener('scroll', this._stickyScrollHander);
       },
 
-      _initMenuPosition () {
+      _initMenuPosition() {
         const _this = this;
-        _this.$header.querySelectorAll('.box-menu').forEach( el => {
+        _this.$header.querySelectorAll('.box-menu').forEach(el => {
           _this._setBoxMenuPosition(el)
         });
 
-        _this.$header.querySelectorAll('.default-menu').forEach( el => {
+        _this.$header.querySelectorAll('.default-menu').forEach(el => {
           _this._setDefaultMenuPosition(el)
         });
       },
 
-      _setBoxMenuPosition (menu) {
+      _setBoxMenuPosition(menu) {
         const limitR = window.innerWidth - menu.offsetWidth - scrollBarWidth;
         const limitL = 0;
         const menuPaddingLeft = parseInt(window.getComputedStyle(menu, null).getPropertyValue('padding-left'));
@@ -716,7 +716,7 @@ function pureFadeOut(e) {
         menu.style.left = `${menuPos}px`;
       },
 
-      _setDefaultMenuPosition (menu) {
+      _setDefaultMenuPosition(menu) {
         const limitR = window.innerWidth - menu.offsetWidth - scrollBarWidth;
         const limitL = 0;
         const menuPaddingLeft = parseInt(window.getComputedStyle(menu, null).getPropertyValue('padding-left'));
@@ -757,7 +757,7 @@ function pureFadeOut(e) {
 
   // Footer Section
   UomoSections.Footer = (function () {
-    function Footer () {
+    function Footer() {
       this.selectors = {
         footer: '.footer-mobile'
       }
@@ -769,7 +769,7 @@ function pureFadeOut(e) {
     }
 
     Footer.prototype = Object.assign({}, Footer.prototype, {
-      _init: function() {
+      _init: function () {
         if (!this.$footer || !UomoHelpers.isMobile) {
           return;
         }
@@ -796,12 +796,12 @@ function pureFadeOut(e) {
 
   // Customer login form
   UomoSections.CustomerSideForm = (function () {
-    function CustomerSideForm () {
+    function CustomerSideForm() {
       this.selectors = {
-        aside:        '.aside.customer-forms',
-        formsWrapper:  '.customer-forms__wrapper',
-        registerActivator:  '.js-show-register',
-        loginActivator:     '.js-show-login'
+        aside: '.aside.customer-forms',
+        formsWrapper: '.customer-forms__wrapper',
+        registerActivator: '.js-show-register',
+        loginActivator: '.js-show-login'
       }
 
       this.$aside = document.querySelector(this.selectors.aside);
@@ -835,13 +835,13 @@ function pureFadeOut(e) {
   })();
 
   UomoSections.CartDrawer = (function () {
-    function CartDrawer () {
+    function CartDrawer() {
       this.selectors = {
-        aside:            '.aside.cart-drawer',
-        asideHeader:      '.aside-header',
-        cartItemRemover:  '.js-cart-item-remove',
-        cartActions:      '.cart-drawer-actions',
-        cartItemsList:    '.cart-drawer-items-list'
+        aside: '.aside.cart-drawer',
+        asideHeader: '.aside-header',
+        cartItemRemover: '.js-cart-item-remove',
+        cartActions: '.cart-drawer-actions',
+        cartItemsList: '.cart-drawer-items-list'
       }
 
       this.asideContentMargin = 30;
@@ -877,11 +877,11 @@ function pureFadeOut(e) {
       },
 
       _initCartItemRemoval: function () {
-        this.$aside.querySelectorAll(this.selectors.cartItemRemover).forEach( el => {
+        this.$aside.querySelectorAll(this.selectors.cartItemRemover).forEach(el => {
           el.addEventListener('click', (event) => {
             event.preventDefault();
             const $parentEl = event.target.parentElement;
-            const $divider  = $parentEl.nextElementSibling;
+            const $divider = $parentEl.nextElementSibling;
             $parentEl.classList.add('_removed');
             $divider && $divider.classList.contains('cart-drawer-divider') && $divider.classList.add('_removed');
             setTimeout(() => {
@@ -897,7 +897,7 @@ function pureFadeOut(e) {
   })();
 
   UomoSections.SwiperSlideshow = (function () {
-    function SwiperSlideshow () {
+    function SwiperSlideshow() {
       this.selectors = {
         container: '.js-swiper-slider'
       }
@@ -908,7 +908,7 @@ function pureFadeOut(e) {
 
     SwiperSlideshow.prototype = Object.assign({}, SwiperSlideshow.prototype, {
       _initSliders() {
-        this.$containers.forEach(function($sliderContainer) {
+        this.$containers.forEach(function ($sliderContainer) {
           if ($sliderContainer.classList.contains('swiper-container-initialized')) {
             return;
           }
@@ -929,7 +929,7 @@ function pureFadeOut(e) {
                 "el": ".slideshow-pagination",
                 "type": "bullets",
                 "clickable": true,
-                renderBullet: function(index, className) {
+                renderBullet: function (index, className) {
                   return '<span class="' + className + '">' + (index + 1).toString().padStart(2, '0') + '</span>';
                 }
               }
@@ -956,7 +956,7 @@ function pureFadeOut(e) {
   })();
 
   UomoSections.ProductSingleMedia = (function () {
-    function ProductSingleMedia () {
+    function ProductSingleMedia() {
       this.selectors = {
         container: '.product-single__media'
       }
@@ -965,18 +965,18 @@ function pureFadeOut(e) {
       this._initProductMedia();
     }
 
-    function setSlideHeight(that){
-      $('.product-single__thumbnail .swiper-slide').css({height:'auto'});
-          var currentSlide = that.activeIndex;
-          var newHeight = $(that.slides[currentSlide]).height();
-  
-          $('.product-single__thumbnail .swiper-wrapper, .product-single__thumbnail .swiper-slide').css({ height : newHeight })
-          that.update();
-     }
+    function setSlideHeight(that) {
+      $('.product-single__thumbnail .swiper-slide').css({ height: 'auto' });
+      var currentSlide = that.activeIndex;
+      var newHeight = $(that.slides[currentSlide]).height();
+
+      $('.product-single__thumbnail .swiper-wrapper, .product-single__thumbnail .swiper-slide').css({ height: newHeight })
+      that.update();
+    }
 
     ProductSingleMedia.prototype = Object.assign({}, ProductSingleMedia.prototype, {
       _initProductMedia() {
-        this.$containers.each(function() {
+        this.$containers.each(function () {
           if ($(this).hasClass('product-media-initialized')) {
             return;
           }
@@ -1001,10 +1001,10 @@ function pureFadeOut(e) {
                 }
               },
               on: {
-                init:function(){
+                init: function () {
                   setSlideHeight(this);
                 },
-                slideChangeTransitionEnd:function(){
+                slideChangeTransitionEnd: function () {
                   setSlideHeight(this);
                 }
               }
@@ -1023,7 +1023,7 @@ function pureFadeOut(e) {
                 swiper: galleryThumbs
               },
               on: {
-                slideChangeTransitionStart: function() {
+                slideChangeTransitionStart: function () {
                   galleryThumbs.slideTo(galleryMain.activeIndex);
                 }
               }
@@ -1080,7 +1080,7 @@ function pureFadeOut(e) {
                 swiper: galleryThumbs
               },
               on: {
-                slideChangeTransitionStart: function() {
+                slideChangeTransitionStart: function () {
                   galleryThumbs.slideTo(galleryMain.activeIndex);
                 }
               }
@@ -1096,7 +1096,7 @@ function pureFadeOut(e) {
   })();
 
   UomoElements.StarRating = (function () {
-    function StarRating () {
+    function StarRating() {
       let stars = Array.from(document.querySelectorAll(UomoSelectors.starRatingControl));
       let user_selected_star = document.querySelector('#form-input-rating');
 
@@ -1111,14 +1111,14 @@ function pureFadeOut(e) {
             }
           })
         })
-      
+
         // Mouseover event
         star.addEventListener('mouseleave', (e) => {
           stars.forEach((item) => {
             item.classList.remove('is-overed');
           })
         })
-      
+
         // Click event
         star.addEventListener('click', (e) => {
           const selected_index = stars.indexOf(e.target);
@@ -1166,20 +1166,20 @@ function pureFadeOut(e) {
 
     initCookieConsient() {
       const purecookieDesc = "In order to provide you a personalized shopping experience, our site uses cookies. By continuing to use this site, you are agreeing to our cookie policy.",
-      purecookieButton = "Accept";
+        purecookieButton = "Accept";
 
       function pureFadeIn(e, o) {
         var i = document.getElementById(e);
         i.style.opacity = 0, i.style.display = o || "block",
-        function e() {
-          var o = parseFloat(i.style.opacity);
-          (o += .02) > 1 || (i.style.opacity = o, requestAnimationFrame(e))
-        }()
+          function e() {
+            var o = parseFloat(i.style.opacity);
+            (o += .02) > 1 || (i.style.opacity = o, requestAnimationFrame(e))
+          }()
       }
 
       function getCookie(e) {
         for (var o = e + "=", i = document.cookie.split(";"), t = 0; t < i.length; t++) {
-          for (var n = i[t];" " == n.charAt(0);) {
+          for (var n = i[t]; " " == n.charAt(0);) {
             n = n.substring(1, n.length);
           }
           if (0 == n.indexOf(o))
@@ -1201,7 +1201,7 @@ function pureFadeOut(e) {
 
     initAccessories() {
       // Check if device is mobile on resize
-      window.addEventListener('resize', function() {
+      window.addEventListener('resize', function () {
         UomoHelpers.isMobile = UomoHelpers.updateDeviceSize();
       });
     }
@@ -1214,7 +1214,7 @@ function pureFadeOut(e) {
     }
 
     _initMultiSelect($containers) {
-      $containers.forEach( el => {
+      $containers.forEach(el => {
         const $component = el;
         const $list = el.querySelector('.multi-select__list');
         const $select = $component.querySelector('select');
@@ -1224,8 +1224,8 @@ function pureFadeOut(e) {
          * Change hero value when selecting item
          */
         const $selectArray = $component.querySelectorAll('.js-multi-select');
-        $selectArray.forEach( el => {
-          el.addEventListener('click', function(e) {
+        $selectArray.forEach(el => {
+          el.addEventListener('click', function (e) {
             e.preventDefault();
 
             const optionIndex = (Array.prototype.indexOf.call($list.children, e.currentTarget)).toString();
@@ -1282,7 +1282,7 @@ function pureFadeOut(e) {
           // eslint-disable-next-line no-undef
           const priceRange = new Slider($se, {
             tooltip_split: true,
-            formatter: function(value) {
+            formatter: function (value) {
               return currency + value;
             },
           });
@@ -1298,75 +1298,75 @@ function pureFadeOut(e) {
     }
   }
 
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function () {
     // Init theme
     UomoHelpers.isMobile = UomoHelpers.updateDeviceSize();
     new Uomo();
   });
 
-  $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+  $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
     var paneTarget = $(e.target).attr('href');
     var $thePane = $('.tab-pane' + paneTarget);
     if ($thePane.find('.swiper-container').length > 0 && 0 === $thePane.find('.swiper-slide-active').length) {
-      document.querySelectorAll('.tab-pane' + paneTarget + ' .swiper-container').forEach( function(item) {
+      document.querySelectorAll('.tab-pane' + paneTarget + ' .swiper-container').forEach(function (item) {
         item.swiper.update();
         item.swiper.lazy.load();
       });
-     }
+    }
   });
 
-  $('#quickView.modal').on('shown.bs.modal', function(e) {
+  $('#quickView.modal').on('shown.bs.modal', function (e) {
     var paneTarget = "#quickView";
     var $thePane = $('.modal' + paneTarget);
     if ($thePane.find('.swiper-container').length > 0 && 0 === $thePane.find('.swiper-slide-active').length) {
-      document.querySelectorAll('.modal' + paneTarget + ' .swiper-container').forEach( function(item) {
+      document.querySelectorAll('.modal' + paneTarget + ' .swiper-container').forEach(function (item) {
         item.swiper.update();
         item.swiper.lazy.load();
       });
-     }
+    }
   });
 
   var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
   var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-    return new bootstrap.Popover(popoverTriggerEl, {'html':true})
+    return new bootstrap.Popover(popoverTriggerEl, { 'html': true })
   });
 
-  $('.shopping-cart .btn-checkout').off('click').on('click', function() {
-    window.location.href='./shop_checkout.html';
+  $('.shopping-cart .btn-checkout').off('click').on('click', function () {
+    window.location.href = './shop_checkout.html';
   });
 
-  $('.checkout-form .btn-checkout').off('click').on('click', function() {
-    window.location.href='./shop_order_complete.html';
+  $('.checkout-form .btn-checkout').off('click').on('click', function () {
+    window.location.href = './shop_order_complete.html';
   });
 
-  document.querySelector('.js-show-register').addEventListener('click', function(e) {
+  document.querySelector('.js-show-register').addEventListener('click', function (e) {
     document.querySelector(this.getAttribute("href")).click();
   });
 
-  $('button.js-add-wishlist, a.add-to-wishlist').off('click').on('click', function() {
-    if($(this).hasClass("active"))
+  $('button.js-add-wishlist, a.add-to-wishlist').off('click').on('click', function () {
+    if ($(this).hasClass("active"))
       $(this).removeClass("active");
     else
       $(this).addClass("active");
     return false;
   });
 
-  if($('[data-fancybox="gallery"]').length > 0) {
+  if ($('[data-fancybox="gallery"]').length > 0) {
     $('[data-fancybox="gallery"]').fancybox({
       backFocus: false
     });
   }
 
-  $(window).off("scroll").on("scroll", function() {
-    if($(".mobile_fixed-btn_wrapper").length > 0) {
-      if($(this).width() < 992 && $(this).width() >= 768) {
-        if($(this).scrollTop() + $(this).height() - 76 <= $(".mobile_fixed-btn_wrapper").offset().top && $(this).scrollTop() > $(this).height()) {
+  $(window).off("scroll").on("scroll", function () {
+    if ($(".mobile_fixed-btn_wrapper").length > 0) {
+      if ($(this).width() < 992 && $(this).width() >= 768) {
+        if ($(this).scrollTop() + $(this).height() - 76 <= $(".mobile_fixed-btn_wrapper").offset().top && $(this).scrollTop() > $(this).height()) {
           $(".mobile_fixed-btn_wrapper > .button-wrapper").addClass("fixed-btn");
         } else {
           $(".mobile_fixed-btn_wrapper > .button-wrapper").removeClass("fixed-btn");
         }
-      } else if($(this).width() < 768) {
-        if($(this).scrollTop() + $(this).height() - 124 <= $(".mobile_fixed-btn_wrapper").offset().top && $(this).scrollTop() > $(this).height()) {
+      } else if ($(this).width() < 768) {
+        if ($(this).scrollTop() + $(this).height() - 124 <= $(".mobile_fixed-btn_wrapper").offset().top && $(this).scrollTop() > $(this).height()) {
           $(".mobile_fixed-btn_wrapper > .button-wrapper").addClass("fixed-btn");
         } else {
           $(".mobile_fixed-btn_wrapper > .button-wrapper").removeClass("fixed-btn");
@@ -1378,11 +1378,11 @@ function pureFadeOut(e) {
   });
 
   window.onload = () => {
-    if($("#newsletterPopup").length > 0)
+    if ($("#newsletterPopup").length > 0)
       $("#newsletterPopup").modal("show");
 
-    $('.btn-video-player').each(function() {
-      $(this).off("click").on("click", function() {
+    $('.btn-video-player').each(function () {
+      $(this).off("click").on("click", function () {
         if ($(this).hasClass("playing")) {
           $(this).removeClass("playing");
           $($(this).data("video")).get(0).pause();
@@ -1393,8 +1393,8 @@ function pureFadeOut(e) {
       });
 
       const btn_player = $(this);
-  
-      $($(this).data("video")).off("ended").on("ended", function() {
+
+      $($(this).data("video")).off("ended").on("ended", function () {
         $(btn_player).removeClass("playing");
         this.currentTime = 0;
       });
@@ -1418,7 +1418,7 @@ function pureFadeOut(e) {
         }
 
         form.querySelectorAll("input[data-cf-pwd]").forEach(function (el) {
-          if(form.querySelector(el.getAttribute("data-cf-pwd")).value != el.value) {
+          if (form.querySelector(el.getAttribute("data-cf-pwd")).value != el.value) {
             event.preventDefault();
             event.stopPropagation();
           }
@@ -1457,7 +1457,7 @@ function pureFadeOut(e) {
 window.addEventListener('load', () => {
   try {
     let url = window.location.href.split('#').pop();
-    document.querySelector('#'+url).click();
+    document.querySelector('#' + url).click();
   } catch {
 
   }

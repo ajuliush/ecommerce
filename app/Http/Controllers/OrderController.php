@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Transaction;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Schema;
 
 class OrderController extends Controller implements HasMiddleware
 {
@@ -48,7 +50,8 @@ class OrderController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        //
+        return  $products = Product::orderBy('created_at', 'DESC')->get();
+        return view('backend.order.create', compact('products'));
     }
 
     /**

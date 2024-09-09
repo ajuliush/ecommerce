@@ -54,6 +54,11 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+//For product search
+Route::get('/search/products', [DashboardController::class, 'search'])
+    ->middleware(['auth', 'verified'])
+    ->name('search.products');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

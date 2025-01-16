@@ -276,8 +276,12 @@
 
         function StringToSlug(Text) {
             return Text.toLowerCase()
-                .replace(/[^\w]+/g, "") // Fixed the regular expression
-                .replace(/\s+/g, "-"); // Fixed the replacement for spaces
+                .normalize("NFD") // Normalize the string (decomposes combined characters)
+                .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
+                .replace(/[^\p{L}\p{N}\s]+/gu, "") // Allow letters and numbers (Unicode-friendly)
+                .replace(/\s+/g, "-") // Replace spaces with hyphens
+                .replace(/-+/g, "-") // Replace multiple hyphens with a single hyphen
+                .trim(); // Remove leading/trailing spaces
         }
         $(document).ready(function() {
             $('.select2').select2({

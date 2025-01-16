@@ -412,7 +412,9 @@
                 }
               }
             }'>
-                <div class="swiper-wrapper"> @foreach ($related_products as $item) <div class="swiper-slide product-card">
+                <div class="swiper-wrapper">
+                    @foreach ($related_products as $item)
+                    <div class="swiper-slide product-card">
                         <div class="pc__img-wrapper">
                             <a href="{{ route('details', $item->slug) }}">
                                 <img loading="lazy" src="{{asset('uploads/products/'.$item->image)}}" width="330" height="400" alt="{{ $product->name }}" class="pc__img"> @foreach (explode(',',$item->images) as $img) <img loading="lazy" src="{{asset('uploads/products/'.$img)}}" width="330" height="400" alt="{{ $product->name }}" class="pc__img pc__img-second"> @endforeach </a> @if(Cart::instance('cart')->content()->where('id', $item->id)->count()>0) <a href="{{ route('cart.index') }}" class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium">Go to cart</a> @else <form name="addtocart-form" method="post" action="{{ route('cart.add') }}"> @csrf <input type="text" name="id" value="{{ $item->id }}">
@@ -423,9 +425,9 @@
                             </form> @endif
                         </div>
                         <div class="pc__info position-relative">
-                            <p class="pc__category">{{ $product->category->name }}</p>
+                            <p class="pc__category">{{ $item->category->name }}</p>
                             <h6 class="pc__title">
-                                <a href="details.html">{{ $product->name }}</a>
+                                <a href="details.html">{{ $item->name }}</a>
                             </h6>
                             <div class="product-card__price d-flex">
                                 <span class="money price"> @if ($item->sale_price) <s> ${{ $item->regular_price }}</s> {{ $item->sale_price }} @else ${{ $item->regular_price }} @endif </span>
@@ -436,7 +438,9 @@
                                 </svg>
                             </button>
                         </div>
-                    </div> @endforeach </div>
+                    </div>
+                    @endforeach
+                </div>
                 <!-- /.swiper-wrapper -->
             </div>
             <!-- /.swiper-container js-swiper-slider -->
